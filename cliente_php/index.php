@@ -1,4 +1,18 @@
+<?php
+// URL de API
+$url = "http://localhost:3000";
 
+// Obtener el contenido de la respuesta
+$response = file_get_contents($url);
+
+// Convertir JSON a array
+$users = json_decode($response, true);
+
+// // Mostrar los datos para depuración
+// echo "<pre>";
+// print_r($users);
+// echo "</pre>";
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +24,7 @@
 <body>
     <div class="formulario">
         <H1>Creación de usuario</H1>
-        <form action="">
+        <form action="crear.php" method="post">
             <input type="text" name="name" placeholder="Nombres">
             <input type="text" name="lastName" placeholder="Apellidos">
             <input type="number" name="age" placeholder="Edad">
@@ -35,15 +49,17 @@
                 </tr>
             </thead>
             <tbody>
+                <?php foreach ($users as $user): ?>
                 <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th><a href="">Editar</a></th>
-                    <th><a href="">Eliminar</a></th>
+                    <td><?php echo $user['name']; ?></td>
+                    <td><?php echo $user['lastName']; ?></td>
+                    <td><?php echo $user['age']; ?></td>
+                    <td><?php echo $user['email']; ?></td>
+                    <td><?php echo $user['password']; ?></td>
+                    <td><a href="">Editar</a></td>
+                    <td><a href="">Eliminar</a></td>
                 </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>
