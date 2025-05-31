@@ -20,7 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result = json_decode($response, true);
 
     if ($httpCode === 200) {
-        echo "OK " . $result['message'];
+        header("Location: list_user.php");
+        exit();
     } else {
         echo "ERROR " . $result['message'];
     }
@@ -32,10 +33,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Iniciar sesión</title>
 </head>
 <body>
-    <form method="POST" action="login.php">
+    <form class="form-container" method="POST" action="login.php">
         <h2>Iniciar sesión</h2>
         <input type="email" name="email" placeholder="Correo" required><br>
         <input type="password" name="password" placeholder="Contraseña" required><br>

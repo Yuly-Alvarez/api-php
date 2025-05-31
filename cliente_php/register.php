@@ -36,10 +36,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Registro de usuarios</title>
 </head>
 <body>
-    <form method="POST" action="register.php">
+    <form class="form-container" method="POST" action="register.php">
         <h2>Registro</h2>
         <input type="text" name="name" placeholder="Nombre" required><br>
         <input type="text" name="lastName" placeholder="Apellido" required><br>
