@@ -18,6 +18,51 @@ mongoose.connect('mongodb://localhost:27017/primera_api')
 
 // Creación de rutas CRUD
 
+//Registro de usuario
+app.post('/register', async (req, res) => {
+    try {
+        const { name, lastName, age, email, password } = req.body;
+
+        // Validación básica
+        if (!email || !password) {
+            return res.status(400).json({ message: 'Correo y contraseña son obligatorios.' });
+        }
+
+        // Verificar si ya existe el usuario
+        const userExists = await ModelUser.findOne({ email });
+        if (userExists) {
+            return res.status(409).json({ message: 'El correo ya está registrado.' });
+        }
+
+        const newUser = await ModelUser.create({ name, lastName, age, email, password });
+        res.status(201).json({ message: 'Usuario registrado exitosamente', user: newUser });
+    } catch (error) {
+        res.status(500).json({ message: 'Error en el servidor', error });
+    }
+});
+
+//Login
+app.post('/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        // Validación
+        if (!email || !password) {
+            return res.status(400).json({ message: 'Correo y contraseña son requeridos.' });
+        }
+
+        const user = await ModelUser.findOne({ email });
+
+        if (!user || user.password !== password) {
+            return res.status(401).json({ message: 'Credenciales inválidas.' });
+        }
+
+        res.status(200).json({ message: 'Autenticación satisfactoria', user });
+    } catch (error) {
+        res.status(500).json({ message: 'Error en el servidor', error });
+    }
+});
+
 //Crear
 app.post('/', async (req, res) => {
     const body = req.body;
